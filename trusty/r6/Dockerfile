@@ -1,4 +1,9 @@
 FROM ubuntu:trusty
+
+ARG APT_PROXY_PORT=
+COPY detect-apt-proxy.sh /root
+RUN /root/detect-apt-proxy.sh ${APT_PROXY_PORT}
+
 RUN apt-get update && apt-get install -y \
     git cmake libunittest++-dev libcurl4-openssl-dev ca-certificates make g++ gcc \
     binutils libx11-dev libxpm-dev libxft-dev \

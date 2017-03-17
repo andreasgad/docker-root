@@ -1,4 +1,13 @@
 FROM ubuntu:xenial
+
+RUN apt-get -y update && apt-get -y install --no-install-recommends \
+    net-tools netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG APT_PROXY_PORT=
+COPY detect-apt-proxy.sh /root
+RUN /root/detect-apt-proxy.sh ${APT_PROXY_PORT}
+
 RUN apt-get -y update && apt-get -y install --no-install-recommends \
     git cmake libunittest++-dev libcurl4-openssl-dev ca-certificates \
     build-essential root-system libgsl0-dev \
